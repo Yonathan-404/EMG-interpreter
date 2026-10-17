@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="panel">
+        <h1>EMG Generator</h1>
+
+        <button id="toggleState" type="button" aria-pressed="false">
+            Switch to active
+        </button>
+
+        <div class="status-row">
+            <span class="label">State:</span>
+            <strong id="stateLabel">Resting</strong>
+        </div>
+
+        <div class="status-row">
+            <span class="label">Current value:</span>
+            <strong id="valueLabel">0.00</strong>
+        </div>
+
+        <section class="graph-section" aria-labelledby="graphTitle">
+            <div class="graph-heading">
+                <h2 id="graphTitle">Signal over time</h2>
+                <span>Last 10 seconds</span>
+            </div>
+            <canvas id="signalGraph" role="img" aria-label="Live EMG signal graph, from 0 to 12 units over the last 10 seconds"></canvas>
+        </section>
+    </main>
+
+
+
+
+
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>
