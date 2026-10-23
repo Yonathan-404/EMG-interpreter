@@ -20,6 +20,13 @@ function updateDisplay() {
     const button = document.getElementById('toggleState');
     const stateLabel = document.getElementById('stateLabel');
     const valueLabel = document.getElementById('valueLabel');
+    const resting = document.getElementById('restingPose');
+    const active = document.getElementById('activePose');
+
+    if (resting && active) {
+        resting.style.display = state.isActive ? 'none' : 'block';
+        active.style.display = state.isActive ? 'block' : 'none';
+    }
 
     if (!button || !stateLabel || !valueLabel) {
         return;
