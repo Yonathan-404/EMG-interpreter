@@ -1,5 +1,5 @@
-const SAMPLE_INTERVAL = 50;
-const MAX_SAMPLES = 200;
+const SAMPLE_INTERVAL = 5;// more realstic interpreation 
+const MAX_SAMPLES = 2000;// to get the 10s of data points in the graph
 const GRAPH_MAX_VALUE = 12;
 
 const state = {
