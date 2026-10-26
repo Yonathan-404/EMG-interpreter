@@ -1,6 +1,7 @@
 const SAMPLE_INTERVAL = 5;// more realstic interpreation 
 const MAX_SAMPLES = 2000;// to get the 10s of data points in the graph
 const GRAPH_MAX_VALUE = 12;
+const DOWNSAMPLE_FACTOR = 7; // downsample the data to reduce the number of points drawn on the graph
 
 const state = {
     isActive: false,
@@ -13,7 +14,7 @@ function generateRestingSample() {
 }
 
 function generateActiveSample() {
-    return 9 + Math.random() * 2;
+    return 10 + (Math.random() - 0.5) * 4; // generate a value between 8 and 12, more realistic interpretation of active state
 }
 
 function updateDisplay() {
@@ -36,7 +37,11 @@ function updateDisplay() {
     button.setAttribute('aria-pressed', String(state.isActive));
     stateLabel.textContent = state.isActive ? 'Active' : 'Resting';
     valueLabel.textContent = state.currentValue.toFixed(2);
+
+    
+    
 }
+
 
 function drawGraph() {
     const canvas = document.getElementById('signalGraph');
@@ -84,15 +89,20 @@ function drawGraph() {
         return;
     }
 
-    const oldestSamplePosition = MAX_SAMPLES - state.samples.length;
     context.lineWidth = 2;
     context.lineJoin = 'round';
     context.lineCap = 'round';
     for (let index = 1; index < state.samples.length; index += 1) {
-        const previous = state.samples[index - 1];
-        const sample = state.samples[index];
-        const previousX = padding.left + ((oldestSamplePosition + index - 1) / (MAX_SAMPLES - 1)) * plotWidth;
-        const x = padding.left + ((oldestSamplePosition + index) / (MAX_SAMPLES - 1)) * plotWidth;
+    const sample = state.samples[index];
+    const previous = state.samples[index - 1];
+    
+    // Only draw if: (every Nth sample) OR (state changed from previous)
+    if (index % DOWNSAMPLE_FACTOR === 0 || sample.isActive !== previous.isActive) {
+        // draw line from previous to current
+    }
+
+        const previousX = padding.left + ((index - 1) / (MAX_SAMPLES - 1)) * plotWidth;
+        const x = padding.left + (index / (MAX_SAMPLES - 1)) * plotWidth;
         const previousY = padding.top + plotHeight * (1 - previous.value / GRAPH_MAX_VALUE);
         const y = padding.top + plotHeight * (1 - sample.value / GRAPH_MAX_VALUE);
 
